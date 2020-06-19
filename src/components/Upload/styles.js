@@ -1,7 +1,21 @@
-import React, { Component } from "react";
+import styled, { css } from "styled-components";
 
-export default class Upload extends Component {
-  render() {
-    return <h1>Component de upload</h1>;
-  }
-}
+const dragActive = css`
+  border-color: #78e5d5;
+`;
+
+const dragReject = css`
+  border-color: #e57878;
+`;
+
+export const DropContainer = styled.div.attrs({
+  className: "dropzone",
+})`
+  border: 1px dashed #dddddd;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: height 0.2s ease;
+
+  ${(props) => props.isDragActive && dragActive};
+  ${(props) => props.isDragReject && dragReject}
+`;
