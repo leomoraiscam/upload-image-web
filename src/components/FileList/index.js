@@ -34,7 +34,7 @@ const FileList = ({ files }) => (
             )}
 
             {file.url && (
-              <a href="#" target="_blank" rel="noopener noreferrer">
+              <a href={file.url} target="_blank" rel="noopener noreferrer">
                 <MdLink style={{ marginRight: 8 }} size={24} color="#222222" />
               </a>
             )}
