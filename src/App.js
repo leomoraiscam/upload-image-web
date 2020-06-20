@@ -1,20 +1,28 @@
-import React from "react";
+import React, { Component } from "react";
 import GlobalStyle from "./styles/global";
 import Upload from "./components/Upload";
 import FileList from "./components/FileList";
 
 import { Container, Content } from "./styles";
 
-function App() {
-  return (
-    <Container>
-      <GlobalStyle />
-      <Content>
-        <Upload />
-        <FileList />
-      </Content>
-    </Container>
-  );
-}
+export default class App extends Component {
+  state = {
+    uploadedFiles: [],
+  };
 
-export default App;
+  handleUpload = (files) => {
+    console.log(files);
+  };
+
+  render() {
+    return (
+      <Container>
+        <GlobalStyle />
+        <Content>
+          <Upload onUpload={this.handleUpload} />
+          <FileList />
+        </Content>
+      </Container>
+    );
+  }
+}
