@@ -18,6 +18,21 @@ class App extends Component {
     };
   }
 
+  async componentDidMount() {
+    const response = await api.get("/posts");
+
+    this.setState({
+      uploadedFiles: response.data.map((file) => ({
+        id: file.id,
+        name: file.name,
+        readaleSize: filesize(file.size),
+        preview: file.url,
+        uploaded: true,
+        url: file.url,
+      })),
+    });
+  }
+
   handleUpload = (files) => {
     const uploadedFiles = files.map((file) => ({
       file,
@@ -75,6 +90,20 @@ class App extends Component {
       });
   };
 
+  handleDelete = async (id) => {
+    await api.delete(`posts/${id}`);
+
+    this.setState({
+      uploadedFiles: this.state.uploadedFiles.filter((file) => file.id !== id),
+    });
+  };
+
+  componentWillMount() {
+    this.state.uploadedFiles.forEach((file) =>
+      URL.revokeObjectURL(file.preview)
+    );
+  }
+
   render() {
     const { uploadedFiles } = this.state;
 
@@ -83,7 +112,9 @@ class App extends Component {
         <GlobalStyle />
         <Content>
           <Upload onUpload={this.handleUpload} />
-          {!!uploadedFiles && <FileList files={uploadedFiles} />}
+          {!!uploadedFiles && (
+            <FileList files={uploadedFiles} onDelete={this.handleDelete} />
+          )}
         </Content>
       </Container>
     );
