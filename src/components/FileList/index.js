@@ -4,39 +4,44 @@ import { MdCheckCircle, MdError, MdLink } from "react-icons/md";
 
 import { Container, FileInfo, Preview } from "./styles";
 
-const FileList = () => (
+const FileList = ({ files }) => (
   <Container>
-    <ul>
+    {files.map((file) => (
       <li>
         <FileInfo>
-          <Preview src="https://img.icons8.com/fluent/96/edit.png" />
+          <Preview src={file.preview} />
           <div>
-            <strong>Profile.png</strong>
+            <strong>{file.name}</strong>
             <span>
-              64kb <button onClick={() => {}}>Excluir</button>
+              {file.readableSize}
+              {!!file.url && <button onClick={() => {}}>Excluir</button>}
             </span>
           </div>
         </FileInfo>
 
         <div>
-          <CircularProgressbar
-            styles={{
-              root: { width: 24 },
-              path: { stroke: "#7159c1" },
-            }}
-            stokeWidth={10}
-            percentage={60}
-          />
+          {!file.uploaded && !file.error && (
+            <CircularProgressbar
+              styles={{
+                root: { width: 24 },
+                path: { stroke: "#7159c1" },
+              }}
+              stokeWidth={10}
+              percentage={file.progress}
+            />
+          )}
 
-          <a href="#" target="_blank" rel="noopener noreferrer">
-            <MdLink style={{ marginRight: 8 }} size={24} color="#222222" />
-          </a>
+          {file.url && (
+            <a href="#" target="_blank" rel="noopener noreferrer">
+              <MdLink style={{ marginRight: 8 }} size={24} color="#222222" />
+            </a>
+          )}
 
-          <MdCheckCircle size={24} color="#78d5d5" />
-          <MdError size={24} color="#e57878" />
+          {file.uploaded && <MdCheckCircle size={24} color="#78d5d5" />}
+          {file.error && <MdError size={24} color="#e57878" />}
         </div>
       </li>
-    </ul>
+    ))}
   </Container>
 );
 
