@@ -10,7 +10,7 @@ export default createGlobalStyle`
   }
 
   body{
-    background:#7159c1;
+    background:#4d7a92;
     font-size: 14px;
     font-family: sans-serif;
     text-rendering:optimizeLegibility;

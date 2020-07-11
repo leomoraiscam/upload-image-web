@@ -91,7 +91,7 @@ class App extends Component {
   };
 
   handleDelete = async (id) => {
-    await api.delete(`posts/${id}`);
+    await api.delete(`post/${id}`);
 
     this.setState({
       uploadedFiles: this.state.uploadedFiles.filter((file) => file.id !== id),
